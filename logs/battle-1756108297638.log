@@ -1,0 +1,25 @@
+[2025-08-25T07:51:37.638Z] [INFO] Starting test
+[2025-08-25T07:51:37.638Z] [INFO] Spawning: bun run tsx src/cli.ts --entry test/fixtures/simple.ts --target library --out-dir tmp/library-build --clean --no-dts
+[2025-08-25T07:51:39.400Z] [OUTPUT] [36mBuilding...[39m
+
+[2025-08-25T07:51:39.407Z] [INFO] Pattern matched: Building...
+[2025-08-25T07:51:39.421Z] [OUTPUT] [34mCLI[39m Building entry: test/fixtures/simple.ts
+
+[2025-08-25T07:51:39.433Z] [OUTPUT] [34mCLI[39m Using tsconfig: tsconfig.json
+[34mCLI[39m tsup v8.5.0
+[34mCLI[39m Target: es2022
+[34mCJS[39m Build start
+[34mESM[39m Build start
+
+[2025-08-25T07:51:39.554Z] [OUTPUT] [32mESM[39m [1mtmp/library-build/simple.js     [22m[32m175.00 B[39m
+[32mESM[39m [1mtmp/library-build/simple.js.map [22m[32m327.00 B[39m
+[32mESM[39m ⚡️ Build success in 121ms
+[32mCJS[39m [1mtmp/library-build/simple.cjs     [22m[32m215.00 B[39m
+[32mCJS[39m [1mtmp/library-build/simple.cjs.map [22m[32m330.00 B[39m
+[32mCJS[39m ⚡️ Build success in 124ms
+
+[2025-08-25T07:51:39.559Z] [INFO] Pattern matched: Build success
+[2025-08-25T07:51:39.559Z] [INFO] Test completed successfully
+[2025-08-25T07:51:39.559Z] [INFO] Cleaning up PTY process
+[2025-08-25T07:51:39.560Z] [INFO] Replay saved: logs/replay-1756108299560.json
+[2025-08-25T07:51:40.625Z] [INFO] Process exited with code: undefined

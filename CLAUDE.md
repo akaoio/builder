@@ -102,4 +102,4 @@ export default {
 ```
 
 ## Testing
-All functionality is tested with @akaoio/battle using real terminal emulation.
+Uses Bun test for unit testing and @akaoio/battle for CLI integration testing.

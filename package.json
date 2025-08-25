@@ -25,7 +25,7 @@
     "docs:build": "npx @akaoio/composer build",
     "docs:watch": "npx @akaoio/composer watch",
     "prebuild": "rm -rf dist",
-    "prepublishOnly": "npm run build && npm test && npm run docs:build"
+    "prepublishOnly": "npm run build && npm test"
   },
   "keywords": [
     "build",
@@ -69,8 +69,8 @@
     "typescript": "^5.9.2"
   },
   "devDependencies": {
-    "@akaoio/battle": "^1.1.0",
-    "@akaoio/composer": "^0.2.3",
+    "@akaoio/battle": "*",
+    "@akaoio/composer": "*",
     "@types/node": "^22.10.6",
     "node-pty": "^1.0.0",
     "tsx": "^4.20.4"
