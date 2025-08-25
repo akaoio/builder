@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../test/fixtures/simple.ts"],"names":[],"mappings":"AAAO,SAAS,MAAM,IAAA,EAAsB;AAC1C,EAAA,OAAO,UAAU,IAAI,CAAA,CAAA,CAAA;AACvB;AAEO,MAAM,OAAA,GAAU","file":"simple.js","sourcesContent":["export function hello(name: string): string {\n  return `Hello, ${name}!`\n}\n\nexport const version = '1.0.0'\n"]}

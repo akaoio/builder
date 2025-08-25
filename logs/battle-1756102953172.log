@@ -1,0 +1,2 @@
+[2025-08-25T06:22:33.175Z] [INFO] Starting test
+[2025-08-25T06:22:33.177Z] [INFO] Spawning: npx tsx src/cli.ts --help

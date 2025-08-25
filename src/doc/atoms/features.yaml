@@ -1,0 +1,13 @@
+features:
+  - name: "Multiple Output Formats"
+    description: "Build to CJS, ESM, IIFE, UMD formats with a single config"
+  - name: "TypeScript Declarations"
+    description: "Automatic .d.ts generation with source maps"
+  - name: "Watch Mode"
+    description: "Intelligent rebuild on file changes"
+  - name: "Zero Config"
+    description: "Smart defaults with preset configurations"
+  - name: "Battle-Tested"
+    description: "Tested with @akaoio/battle using real PTY emulation"
+  - name: "Multi-Runtime"
+    description: "Works with Bun, Node.js, and Deno"

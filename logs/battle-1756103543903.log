@@ -1,0 +1,39 @@
+[2025-08-25T06:32:23.903Z] [INFO] Starting test
+[2025-08-25T06:32:23.903Z] [INFO] Spawning: bun run tsx test/programmatic.test.ts
+[2025-08-25T06:32:25.857Z] [OUTPUT] 🧪 Testing Programmatic Builder API
+
+Test 1: Creating Builder instance...
+
+[2025-08-25T06:32:25.869Z] [OUTPUT]   ✅ Builder created successfully
+
+Test 2: Building project...
+
+[2025-08-25T06:32:25.881Z] [INFO] Pattern matched: Testing Programmatic Builder API
+[2025-08-25T06:32:25.881Z] [INFO] Pattern matched: Builder created successfully
+[2025-08-25T06:32:26.043Z] [OUTPUT]   ✅ Build succeeded
+  Duration: 150ms
+  Output files: 2
+    - /home/x/Projects/builder/tmp/programmatic-test/simple.js (esm) - 175 bytes
+    - /home/x/Projects/builder/tmp/programmatic-test/simple.cjs (cjs) - 215 bytes
+
+Test 3: Verifying output files...
+  ✅ tmp/programmatic-test/simple.js exists
+  ✅ tmp/programmatic-test/simple.cjs exists
+
+Test 4: Getting configuration...
+  Entry: /home/x/Projects/builder/test/fixtures/simple.ts
+  Output: /home/x/Projects/builder/tmp/programmatic-test
+  Formats: cjs, esm
+  ✅ Configuration retrieved
+
+========================================
+✅ All programmatic API tests passed!
+
+[2025-08-25T06:32:26.082Z] [INFO] Pattern matched: Build succeeded
+[2025-08-25T06:32:26.083Z] [INFO] Pattern matched: simple.js exists
+[2025-08-25T06:32:26.083Z] [INFO] Pattern matched: simple.cjs exists
+[2025-08-25T06:32:26.083Z] [INFO] Pattern matched: Configuration retrieved
+[2025-08-25T06:32:26.083Z] [INFO] Pattern matched: All programmatic API tests passed!
+[2025-08-25T06:32:26.083Z] [INFO] Test completed successfully
+[2025-08-25T06:32:26.083Z] [INFO] Cleaning up PTY process
+[2025-08-25T06:32:26.084Z] [INFO] Replay saved: logs/replay-1756103546083.json

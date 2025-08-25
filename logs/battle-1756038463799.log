@@ -1,0 +1,45 @@
+[2025-08-24T12:27:43.800Z] [INFO] Starting test
+[2025-08-24T12:27:43.802Z] [INFO] Spawning: npx tsx src/cli.ts --entry test/fixtures/simple.ts --target library --out-dir tmp/library-build --clean
+[2025-08-24T12:27:46.528Z] [OUTPUT] [36mBuilding...[39m
+
+[2025-08-24T12:27:46.532Z] [INFO] Pattern matched: Building...
+[2025-08-24T12:27:46.550Z] [OUTPUT] [34mCLI[39m Building entry: test/fixtures/simple.ts
+
+[2025-08-24T12:27:46.552Z] [OUTPUT] [34mCLI[39m Using tsconfig: tsconfig.json
+
+[2025-08-24T12:27:46.552Z] [OUTPUT] [34mCLI[39m tsup v8.5.0
+
+[2025-08-24T12:27:46.559Z] [OUTPUT] [34mCLI[39m Target: es2022
+
+[2025-08-24T12:27:46.563Z] [OUTPUT] [34mCJS[39m Build start
+[34mESM[39m Build start
+
+[2025-08-24T12:27:46.714Z] [OUTPUT] [32mCJS[39m [1mtmp/library-build/simple.cjs     [22m[32m215.00 B[39m
+[32mCJS[39m [1mtmp/library-build/simple.cjs.map [22m[32m330.00 B[39m
+
+[2025-08-24T12:27:46.715Z] [OUTPUT] [32mCJS[39m ⚡️ Build success in 152ms
+
+[2025-08-24T12:27:46.716Z] [OUTPUT] [32mESM[39m [1mtmp/library-build/simple.js     [22m[32m175.00 B[39m
+
+[2025-08-24T12:27:46.716Z] [OUTPUT] [32mESM[39m [1mtmp/library-build/simple.js.map [22m[32m327.00 B[39m
+[32mESM[39m ⚡️ Build success in 153ms
+
+[2025-08-24T12:27:48.303Z] [OUTPUT] [34mDTS[39m Build start
+
+[2025-08-24T12:27:49.575Z] [OUTPUT] error TS6059: File '/home/x/Projects/builder/test/fixtures/simple.ts' is not under 'rootDir' 'src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Root file specified for compilation
+  File is ECMAScript module because '/home/x/Projects/builder/package.json' has field "type" with value "module"
+
+
+[2025-08-24T12:27:49.579Z] [OUTPUT] [31m✗ Build failed in 3048ms[39m
+
+[2025-08-24T12:27:49.580Z] [OUTPUT] [31merror occurred in dts build[39m
+
+[2025-08-24T12:27:49.733Z] [INFO] Process exited with code: 1
+[2025-08-24T12:27:56.546Z] [ERROR] Expected pattern not found after 10000ms: ✓ Build completed
+[2025-08-24T12:27:56.549Z] [INFO] Screenshot saved: screenshots/expect-failure
+[2025-08-24T12:27:56.551Z] [ERROR] Test failed: Expected pattern not found: ✓ Build completed
+[2025-08-24T12:27:56.552Z] [INFO] Screenshot saved: screenshots/test-failure
+[2025-08-24T12:27:56.552Z] [INFO] Cleaning up PTY process
+[2025-08-24T12:27:56.554Z] [INFO] Replay saved: logs/replay-1756038476553.json

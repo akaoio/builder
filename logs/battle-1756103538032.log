@@ -1,0 +1,10 @@
+[2025-08-25T06:32:18.033Z] [INFO] Starting test
+[2025-08-25T06:32:18.033Z] [INFO] Spawning: bun run tsx src/cli.ts --entry non-existent.ts
+[2025-08-25T06:32:19.792Z] [OUTPUT] [31mError:[39m Entry point does not exist: /home/x/Projects/builder/non-existent.ts
+
+[2025-08-25T06:32:19.804Z] [INFO] Pattern matched: Error:
+[2025-08-25T06:32:19.804Z] [INFO] Pattern matched: Entry point does not exist
+[2025-08-25T06:32:19.804Z] [INFO] Test completed successfully
+[2025-08-25T06:32:19.804Z] [INFO] Cleaning up PTY process
+[2025-08-25T06:32:19.804Z] [INFO] Replay saved: logs/replay-1756103539804.json
+[2025-08-25T06:32:20.852Z] [INFO] Process exited with code: undefined

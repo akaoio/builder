@@ -1,0 +1,36 @@
+cli:
+  install: "npm install -g @akaoio/builder"
+  commands:
+    - command: "akao-build"
+      description: "Build with default configuration"
+    - command: "akao-build --watch"
+      description: "Watch mode with auto-rebuild"
+    - command: "akao-build --target library"
+      description: "Build as library with CJS + ESM"
+    - command: "akao-build --clean"
+      description: "Clean output directory before build"
+
+api:
+  basic: |
+    import { Builder } from "@akaoio/builder"
+    
+    const builder = new Builder({
+      entry: "./src/index.ts",
+      target: "library",
+      clean: true
+    })
+    
+    await builder.build()
+  
+  config: |
+    // builder.config.js
+    module.exports = {
+      entry: "src/index.ts",
+      target: "library",
+      formats: ["cjs", "esm"],
+      dts: true,
+      sourcemap: true,
+      clean: true,
+      external: ["node:*"],
+      minify: process.env.NODE_ENV === "production"
+    }

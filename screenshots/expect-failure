@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { 
+            background: #000; 
+            color: #fff; 
+            font-family: 'Courier New', monospace;
+            white-space: pre;
+            padding: 20px;
+        }
+        .ansi-black { color: #000; }
+        .ansi-red { color: #f00; }
+        .ansi-green { color: #0f0; }
+        .ansi-yellow { color: #ff0; }
+        .ansi-blue { color: #00f; }
+        .ansi-magenta { color: #f0f; }
+        .ansi-cyan { color: #0ff; }
+        .ansi-white { color: #fff; }
+    </style>
+</head>
+<body><span class="ansi-cyan">Building...[39m<br><span class="ansi-blue">CLI[39m Building entry: test/fixtures/browser.ts<br><span class="ansi-blue">CLI[39m Using tsconfig: tsconfig.json<br><span class="ansi-blue">CLI[39m tsup v8.5.0<br><span class="ansi-blue">CLI[39m Target: es2022<br><span class="ansi-blue">CJS[39m Build start<br><span class="ansi-blue">ESM[39m Build start<br><span class="ansi-green">ESM[39m [1mtmp/browser-build/browser.js     [22m<span class="ansi-green">443.00 B[39m<br><span class="ansi-green">ESM[39m [1mtmp/browser-build/browser.js.map [22m<span class="ansi-green">923.00 B[39m<br><span class="ansi-green">ESM[39m ⚡️ Build success in 153ms<br><span class="ansi-green">CJS[39m [1mtmp/browser-build/browser.cjs     [22m<span class="ansi-green">485.00 B[39m<br><span class="ansi-green">CJS[39m [1mtmp/browser-build/browser.cjs.map [22m<span class="ansi-green">926.00 B[39m<br><span class="ansi-green">CJS[39m ⚡️ Build success in 155ms<br><span class="ansi-blue">DTS[39m Build start<br>error TS6059: File '/home/x/Projects/builder/test/fixtures/browser.ts' is not under 'rootDir' 'src'. 'rootDir' is expected to contain all source files.<br>  The file is in the program because:<br>    Root file specified for compilation<br>  File is ECMAScript module because '/home/x/Projects/builder/package.json' has field "type" with value "module"<br>test/fixtures/browser.ts(2,38): error TS2304: Cannot find name 'HTMLElement'.<br>test/fixtures/browser.ts(3,12): error TS2584: Cannot find name 'document'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.<br>test/fixtures/browser.ts(6,43): error TS2304: Cannot find name 'Element'.<br>test/fixtures/browser.ts(7,12): error TS2584: Cannot find name 'document'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.<br>test/fixtures/browser.ts(12,7): error TS2584: Cannot find name 'document'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.<br>test/fixtures/browser.ts(15,5): error TS2584: Cannot find name 'document'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.<br><br><span class="ansi-red">✗ Build failed in 2964ms[39m<br><span class="ansi-red">error occurred in dts build[39m<br></body>
+</html>
