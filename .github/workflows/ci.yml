@@ -1,0 +1,372 @@
+name: Builder CI/CD - Universal TypeScript Build Framework
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+env:
+  NODE_VERSION: '18'
+  BUN_VERSION: 'latest'
+
+jobs:
+  lint-and-typecheck:
+    name: Lint and TypeScript Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript type checking
+        run: npx tsc --noEmit
+
+      - name: Validate Builder architecture
+        run: |
+          echo "🏗️ Validating Builder architecture..."
+          
+          # Check Class = Directory pattern
+          for class in Builder Compiler Config Preset; do
+            if [ ! -d "src/$class" ]; then
+              echo "❌ Missing class directory: $class"
+              exit 1
+            fi
+          done
+          
+          echo "✅ Builder architecture validated"
+
+  build-test:
+    name: Build and Core Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        runtime: ['node', 'bun']
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        if: matrix.runtime == 'node'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Setup Bun
+        if: matrix.runtime == 'bun'
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          if [ "${{ matrix.runtime }}" = "bun" ]; then
+            bun install
+          else
+            npm ci
+          fi
+
+      - name: Build Builder
+        run: |
+          echo "🔨 Building Builder framework..."
+          if [ "${{ matrix.runtime }}" = "bun" ]; then
+            bun run build
+          else
+            npm run build
+          fi
+
+      - name: Verify build artifacts
+        run: |
+          # Check CLI exists
+          if [ ! -f "dist/cli.js" ]; then
+            echo "❌ CLI build artifact missing"
+            exit 1
+          fi
+          
+          # Check main exports
+          if [ ! -f "dist/index.js" ] && [ ! -f "dist/index.cjs" ]; then
+            echo "❌ Main exports missing"
+            exit 1
+          fi
+          
+          echo "✅ Build artifacts verified"
+
+      - name: Test CLI interface
+        run: |
+          echo "🧪 Testing Builder CLI..."
+          node dist/cli.js --help
+          node dist/cli.js --version
+
+      - name: Run unit tests
+        run: |
+          if [ "${{ matrix.runtime }}" = "bun" ]; then
+            bun test
+          else
+            npm test
+          fi
+
+  battle-tests:
+    name: Battle Terminal Tests
+    runs-on: ubuntu-latest
+    needs: build-test
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Builder
+        run: npm run build
+
+      - name: Install Battle framework
+        run: |
+          cd ../battle
+          npm install
+          npm run build
+          npm link
+          cd ../builder
+
+      - name: Install tsx for TypeScript support
+        run: npm install -g tsx
+
+      - name: Run Battle tests
+        run: |
+          echo "⚔️ Running Builder Battle tests..."
+          
+          # Run the recovered Battle tests
+          if [ -f "builder.battle.cjs" ]; then
+            battle test builder.battle.cjs
+          fi
+
+      - name: Upload Battle reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: builder-battle-reports
+          path: |
+            logs/
+            battle-reports/
+          retention-days: 7
+
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: battle-tests
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Builder
+        run: npm run build
+
+      - name: Test all build targets
+        run: |
+          echo "🎯 Testing all build targets..."
+          
+          # Test library target
+          node dist/cli.js --entry test/fixtures/simple.ts --target library --out-dir tmp/test-lib --clean
+          
+          # Test node target  
+          node dist/cli.js --entry test/fixtures/simple.ts --target node --out-dir tmp/test-node --clean
+          
+          # Test browser target
+          node dist/cli.js --entry test/fixtures/simple.ts --target browser --global-name TestLib --out-dir tmp/test-browser --clean
+          
+          # Test CLI target
+          node dist/cli.js --entry test/fixtures/simple.ts --target cli --out-dir tmp/test-cli --clean
+
+      - name: Test multi-format output
+        run: |
+          echo "📦 Testing multi-format output..."
+          node dist/cli.js --entry test/fixtures/simple.ts --format cjs esm --out-dir tmp/multi --clean
+          
+          # Verify both formats created
+          if [ ! -f "tmp/multi/simple.cjs" ] || [ ! -f "tmp/multi/simple.js" ]; then
+            echo "❌ Multi-format output failed"
+            exit 1
+          fi
+
+      - name: Test TypeScript declarations
+        run: |
+          echo "📝 Testing TypeScript declarations..."
+          node dist/cli.js --entry test/fixtures/simple.ts --dts --out-dir tmp/dts-test --clean
+          
+          # Check .d.ts files created
+          if [ ! -f "tmp/dts-test/simple.d.ts" ]; then
+            echo "❌ TypeScript declarations not generated"
+            exit 1
+          fi
+
+  performance-test:
+    name: Performance Tests
+    runs-on: ubuntu-latest
+    needs: integration-tests
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Builder
+        run: npm run build
+
+      - name: Performance benchmarks
+        run: |
+          echo "⚡ Running performance benchmarks..."
+          
+          # Measure build time
+          START=$(date +%s%3N)
+          node dist/cli.js --entry test/fixtures/simple.ts --out-dir tmp/perf-test --clean >/dev/null 2>&1
+          END=$(date +%s%3N)
+          BUILD_TIME=$((END - START))
+          
+          echo "📊 Simple build time: ${BUILD_TIME}ms"
+          
+          # Fail if build takes more than 10 seconds
+          if [ $BUILD_TIME -gt 10000 ]; then
+            echo "❌ Build too slow: ${BUILD_TIME}ms"
+            exit 1
+          fi
+
+  self-hosting-test:
+    name: Self-Hosting Test
+    runs-on: ubuntu-latest
+    needs: performance-test
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test Builder builds itself
+        run: |
+          echo "🔄 Testing Builder self-hosting..."
+          
+          # Use Builder to build Builder
+          node dist/cli.js --entry src/index.ts src/cli.ts --format cjs esm --dts --out-dir tmp/self-build --clean
+          
+          # Verify self-built CLI works
+          if [ -f "tmp/self-build/cli.js" ]; then
+            node tmp/self-build/cli.js --version
+          else
+            echo "❌ Self-hosting failed"
+            exit 1
+          fi
+          
+          echo "✅ Builder can build itself"
+
+  publish:
+    name: Publish Release
+    runs-on: ubuntu-latest
+    needs: [build-test, battle-tests, integration-tests, performance-test, self-hosting-test]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build for production
+        run: npm run build
+
+      - name: Run tests
+        run: npm test
+
+      - name: Create release package
+        run: |
+          mkdir -p release
+          cp -r dist/ release/
+          cp package.json release/
+          cp README.md release/
+          cp LICENSE release/
+          
+          cd release
+          tar -czf ../builder-release.tar.gz .
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: builder-release
+          path: builder-release.tar.gz
+          retention-days: 30
+
+  notify:
+    name: Notification
+    runs-on: ubuntu-latest
+    needs: [publish]
+    if: always()
+    
+    steps:
+      - name: Success notification
+        if: needs.publish.result == 'success'
+        run: |
+          echo "🎉 Builder CI/CD pipeline completed successfully!"
+          echo "✅ Multi-platform testing completed"
+          echo "✅ Battle terminal tests passed"
+          echo "✅ All build targets validated"
+          echo "✅ Multi-format output verified"
+          echo "✅ TypeScript declarations generated"
+          echo "✅ Performance benchmarks met"
+          echo "✅ Self-hosting capability confirmed"
+          echo "📦 Release package created"
+
+      - name: Failure notification
+        if: contains(needs.*.result, 'failure')
+        run: |
+          echo "❌ Builder CI/CD pipeline failed!"
+          exit 1
