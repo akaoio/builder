@@ -7,21 +7,21 @@
 
 ## Features
 
-{{#each features}}
+{{#each features.features}}
 - **{{name}}**: {{description}}
 {{/each}}
 
 ## Installation
 
 ```bash
-{{cli.install}}
+{{usage.cli.install}}
 ```
 
 ## Quick Start
 
 ### CLI Usage
 
-{{#each cli.commands}}
+{{#each usage.cli.commands}}
 ```bash
 {{command}}  # {{description}}
 ```
@@ -30,13 +30,13 @@
 ### Programmatic Usage
 
 ```typescript
-{{api.basic}}
+{{usage.api.basic}}
 ```
 
 ### Configuration File
 
 ```javascript
-{{api.config}}
+{{usage.api.config}}
 ```
 
 ## Build Targets
