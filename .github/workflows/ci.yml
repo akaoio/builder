@@ -26,7 +26,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: TypeScript type checking
         run: npx tsc --noEmit
@@ -76,7 +76,7 @@ jobs:
           if [ "${{ matrix.runtime }}" = "bun" ]; then
             bun install
           else
-            npm ci
+            npm install
           fi
 
       - name: Build Builder
@@ -134,7 +134,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build Builder
         run: npm run build
@@ -185,7 +185,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build Builder
         run: npm run build
@@ -244,7 +244,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build Builder
         run: npm run build
@@ -283,7 +283,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Test Builder builds itself
         run: |
@@ -319,7 +319,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build for production
         run: npm run build
