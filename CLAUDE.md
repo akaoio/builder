@@ -1,157 +1,296 @@
-# CLAUDE.md - @akaoio/builder
+# CLAUDE.md - 
 
-> **Last Updated**: August 2025  
-> **Version**: 1.0.1  
-> **License**: MIT  
-> **Language**: TypeScript
+This file provides guidance to Claude Code (claude.ai/code) when working with the  codebase.
 
 ## Project Overview
 
-**@akaoio/builder** is a universal TypeScript build framework designed specifically for the @akaoio ecosystem. Built on top of esbuild and tsup, it provides a standardized, robust way to build TypeScript projects with multiple output formats while maintaining consistency across all @akaoio packages.
+**** - 
 
-### Key Features
+**Version**:   
+**License**:   
+**Author**:   
+**Repository**:   
+**Philosophy**: ""
 
-- **Universal Output**: Generate CJS, ESM, IIFE, UMD formats from single source
-- **TypeScript First**: Full TypeScript support with declaration files
-- **Multi-Runtime**: Optimized builds for Node.js, Bun, and browsers  
-- **Watch Mode**: Intelligent rebuilds with file watching
-- **Zero Config**: Works out of the box with sensible defaults
-- **Battle Tested**: Real PTY testing with @akaoio/battle framework
-- **Configuration Cascade**: CLI → config file → package.json → defaults
+## Core Development Principles
 
-### Why Builder Exists
 
-The @akaoio ecosystem requires consistent build tooling across all packages. Builder standardizes:
-- TypeScript compilation with proper ES module handling
-- Multi-format output generation for maximum compatibility
-- Development workflow with watch mode and hot reloading
-- Testing integration with Battle framework for real terminal testing
 
-## Core Architecture
+## Architecture Overview
 
-### Class = Directory Pattern
-Following @akaoio principles, each class is a directory with one method per file:
+### System Design
 
-```
-Builder/
-  index.ts          # Class container with delegation
-  constructor.ts    # Initialize configuration
-  build.ts         # Main build execution
-  watch.ts         # Watch mode with rebuilds
-  validate.ts      # Configuration validation
-  clean.ts         # Clean output directory
-```
 
-### Key Features
-- Multiple output formats: CJS, ESM, IIFE, UMD
-- TypeScript declarations with source maps
-- Watch mode with intelligent rebuilds
-- Battle-tested with real PTY testing
-- Configuration presets for common scenarios
-- Multi-runtime support (Bun, Node.js)
 
-### Configuration
-Builder uses a cascade of configurations:
-1. CLI arguments (highest priority)
-2. builder.config.js file
-3. Package.json "builder" field
-4. Default presets
+### Core Components
 
-### Build Targets
-- **library**: For NPM packages (CJS + ESM + DTS)
-- **node**: For Node.js applications (CJS)
-- **bun**: For Bun applications (ESM)
-- **browser**: For browser bundles (IIFE/UMD)
-- **cli**: For CLI tools (CJS with shebang)
-- **universal**: All formats
 
-## Development Principles
 
-### TypeScript ES Modules
-All imports MUST use .js extensions for Node.js compatibility:
-```typescript
-import { Config } from "./Config/index.js"
-import { build } from "./build.js"
-```
+## Features
 
-### No Mocks, Real Testing
-Uses @akaoio/battle for real PTY testing, not fake pipes.
 
-### Zero Technical Debt
-Complete implementation, no TODOs or placeholders.
+### 
 
-### Single-Word Methods
-Methods use single words or dot notation:
-- build()
-- watch()
-- clean()
-- validate()
-- preset.load()
-- output.format()
 
-## Usage
 
-### CLI
+### 
+
+
+
+### 
+
+
+
+
+## Command Interface
+
+### Core Commands
+
 ```bash
-akao-build            # Build with defaults
-akao-build --watch    # Watch mode
-akao-build --target library --clean
+
 ```
 
-### Programmatic
-```typescript
-import { Builder } from "@akaoio/builder"
+### Detailed Command Reference
 
-const builder = new Builder({
-  entry: "./src/index.ts",
-  target: "library",
-  clean: true
-})
 
-await builder.build()
+
+
+
+
+
+
+## Environment Variables
+
+
+
+## Development Guidelines
+
+### Shell Script Standards
+
+**POSIX Compliance**
+- Use `/bin/sh` (not bash-specific features)
+- Avoid bashisms and GNU-specific extensions
+- Test on multiple shells (dash, ash, bash)
+
+**Error Handling**
+- Always check exit codes: `command || handle_error`
+- Use proper error messages with context
+- Fail fast and clearly on configuration errors
+
+**Security Practices**
+- Validate all user input
+- Use secure temp file creation
+- Never expose sensitive data in logs
+- Proper file permissions (600 for configs)
+
+### Code Organization
+
+```
+manager.sh              # Main entry point
+├── Core Functions
+│   ├── manager_init()      # Framework initialization
+│   ├── manager_config()    # Configuration management
+│   └── manager_error()     # Error handling
+├── Module Loading
+│   ├── load_module()       # Dynamic module loading
+│   └── verify_module()     # Module verification
+└── Utility Functions
+    ├── log()              # Logging functionality
+    ├── validate_posix()   # POSIX compliance check
+    └── check_deps()       # Dependency verification
 ```
 
-### Configuration File
-```javascript
-// builder.config.js
-export default {
-  entry: ["src/index.ts", "src/cli.ts"],
-  target: "library",
-  formats: ["cjs", "esm"],
-  dts: true,
-  sourcemap: true,
-  clean: true,
-  external: ["node:*"],
-  minify: process.env.NODE_ENV === "production"
+### Module Development
+
+Each module follows this pattern:
+
+```bash
+#!/bin/sh
+# Module: module-name
+# Description: Brief description
+# Dependencies: none (or list them)
+
+# Module initialization
+module_init() {
+    # Initialization code
+}
+
+# Module functions
+module_function() {
+    # Function implementation
+}
+
+# Module cleanup
+module_cleanup() {
+    # Cleanup code
+}
+
+# Export module interface
+MANAGER_MODULE_NAME="module-name"
+MANAGER_MODULE_VERSION="1.0.0"
+```
+
+### Testing Requirements
+
+**Manual Testing**
+- Test on multiple shells (sh, dash, ash, bash)
+- Verify on different Unix-like systems
+- Test failure scenarios and recovery
+- Validate all command options
+
+**Test Framework**
+```bash
+# Run all tests
+./tests/run-all.sh
+
+# Run specific test
+./tests/test-core.sh
+
+# Test with specific shell
+SHELL=/bin/dash ./tests/run-all.sh
+```
+
+## Common Patterns
+
+### Standard Error Handling
+```bash
+# Function with error handling
+function_name() {
+    command || {
+        log "ERROR: Command failed: $*"
+        return 1
+    }
 }
 ```
 
-## Testing
-Uses Bun test for unit testing and @akaoio/battle for CLI integration testing.
-
-### Testing Philosophy
-
-Following @akaoio principles:
-- **No Mocks**: Use real dependencies and integration tests
-- **Real PTY Testing**: Terminal interactions tested with Battle framework
-- **TDD Approach**: Write tests before implementation
-- **100% Real Implementation**: No placeholder or stub code
-
-### Test Structure
-
+### Configuration Validation
+```bash
+# Validate required configuration
+validate_config() {
+    [ -z "$CONFIG_VALUE" ] && {
+        echo "ERROR: CONFIG_VALUE not set"
+        exit 1
+    }
+}
 ```
-test/
-  Builder/
-    build.test.ts        # Core build functionality
-    watch.test.ts        # Watch mode validation
-    config.test.ts       # Configuration loading
-  integration/
-    cli.test.ts          # CLI interface testing
-    formats.test.ts      # Output format validation
+
+### Safe Temp File Creation
+```bash
+# Create temporary file safely
+TEMP_FILE=$(mktemp) || exit 1
+trap 'rm -f "$TEMP_FILE"' EXIT
 ```
+
+### Module Loading
+```bash
+# Load module with verification
+load_module "module-name" || {
+    log "ERROR: Failed to load module: module-name"
+    exit 1
+}
+```
+
+## Use Cases
+
+
+
+## Security Considerations
+
+### Framework Security
+- All modules verified before loading
+- Configuration files with restricted permissions (600)
+- No execution of untrusted code
+- Input validation at all entry points
+
+### Deployment Security
+- Secure installation process
+- Proper service user creation
+- Limited privileges for service execution
+- Audit logging for critical operations
+
+## Troubleshooting Guide
+
+### Common Issues
+
+**Module Loading Failures**
+```bash
+# Debug module loading
+MANAGER_DEBUG=true manager init
+
+# Check module path
+echo $MANAGER_MODULE_PATH
+
+# Verify module syntax
+sh -n module-name.sh
+```
+
+**Configuration Issues**
+```bash
+# Check configuration
+manager config list
+
+# Validate configuration file
+manager config validate
+
+# Reset configuration
+rm -rf ~/.config/manager
+manager init
+```
+
+**Service Issues**
+```bash
+# Check service status
+manager service status
+
+# View service logs
+journalctl -u manager -f
+
+# Restart service
+manager service restart
+```
+
+## Notes for AI Assistants
+
+When working with Manager:
+
+### Critical Guidelines
+- **ALWAYS maintain POSIX compliance** - test with `/bin/sh`
+- **NEVER introduce dependencies** - pure shell only
+- **Follow the module pattern** - consistency is key
+- **Test on multiple shells** - dash, ash, sh, bash
+- **Respect the framework philosophy** - universal patterns
+
+### Development Best Practices
+- **Start with the core module** - understand the foundation
+- **Use existing patterns** - don't reinvent the wheel
+- **Test error conditions** - robust error handling
+- **Document module interfaces** - clear contracts
+- **Validate all inputs** - security first
+
+### Common Mistakes to Avoid
+- Using bash-specific features (arrays, [[ ]], etc.)
+- Assuming GNU coreutils extensions
+- Hardcoding paths instead of using variables
+- Forgetting to check exit codes
+- Not testing on minimal systems
+
+### Framework Extensions
+When extending Manager:
+1. Create new module following the pattern
+2. Add module to the module registry
+3. Update configuration schema if needed
+4. Add tests for new functionality
+5. Document in module header
+
+## 
+
+
+
+### Benefits
+
 
 ---
 
-*Generated with @akaoio/composer on 2025-08-26*
+*Manager is the foundation - bringing order to chaos through universal shell patterns.*
 
-*Builder Framework v1.0.1*
+*Version:  | License:  | Author: *
