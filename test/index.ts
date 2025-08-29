@@ -122,8 +122,8 @@ async function runTests() {
     // Programmatic API Tests
     {
       name: 'API: Programmatic Usage',
-      command: 'bun',
-      args: ['run', 'tsx', 'test/programmatic.test.ts'],
+      command: 'tsx',
+      args: ['test/programmatic.test.ts'],
       expect: [
         'Testing Programmatic Builder API',
         'Builder created successfully',
