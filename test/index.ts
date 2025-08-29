@@ -73,50 +73,50 @@ async function runTests() {
     // CLI Tests
     {
       name: 'CLI: Help',
-      command: 'bun',
-      args: ['run', 'tsx', 'src/cli.ts', '--help'],
+      command: 'node',
+      args: ['dist/cli.js', '--help'],
       expect: ['Universal TypeScript build tool', 'Options:', '--entry', '--format']
     },
     {
       name: 'CLI: Build Simple Project',
-      command: 'bun',
-      args: ['run', 'tsx', 'src/cli.ts', '--entry', 'test/fixtures/simple.ts', '--out-dir', 'tmp/simple-build', '--clean', '--no-dts'],
+      command: 'node',
+      args: ['dist/cli.js', '--entry', 'test/fixtures/simple.ts', '--out-dir', 'tmp/simple-build', '--clean', '--no-dts'],
       expect: ['Building...', 'Build success']
     },
     {
       name: 'CLI: Library Preset',
-      command: 'bun',
-      args: ['run', 'tsx', 'src/cli.ts', '--entry', 'test/fixtures/simple.ts', '--target', 'library', '--out-dir', 'tmp/library-build', '--clean', '--no-dts'],
+      command: 'node',
+      args: ['dist/cli.js', '--entry', 'test/fixtures/simple.ts', '--target', 'library', '--out-dir', 'tmp/library-build', '--clean', '--no-dts'],
       expect: ['Building...', 'Build success']
     },
     {
       name: 'CLI: Multiple Formats',
-      command: 'bun',
-      args: ['run', 'tsx', 'src/cli.ts', '--entry', 'test/fixtures/simple.ts', '--format', 'cjs', 'esm', '--out-dir', 'tmp/multi-format', '--clean', '--no-dts'],
+      command: 'node',
+      args: ['dist/cli.js', '--entry', 'test/fixtures/simple.ts', '--format', 'cjs', 'esm', '--out-dir', 'tmp/multi-format', '--clean', '--no-dts'],
       expect: ['Building...', 'Build success']
     },
     {
       name: 'CLI: Verbose Output',
-      command: 'bun',
-      args: ['run', 'tsx', 'src/cli.ts', '--entry', 'test/fixtures/simple.ts', '--out-dir', 'tmp/verbose-build', '--verbose', '--clean', '--no-dts'],
+      command: 'node',
+      args: ['dist/cli.js', '--entry', 'test/fixtures/simple.ts', '--out-dir', 'tmp/verbose-build', '--verbose', '--clean', '--no-dts'],
       expect: ['Building...', 'Output files:', 'Build completed']
     },
     {
       name: 'CLI: Invalid Entry',
-      command: 'bun',
-      args: ['run', 'tsx', 'src/cli.ts', '--entry', 'non-existent.ts'],
+      command: 'node',
+      args: ['dist/cli.js', '--entry', 'non-existent.ts'],
       expect: ['Error:', 'Entry point does not exist']
     },
     {
       name: 'CLI: Node Target',
-      command: 'bun',
-      args: ['run', 'tsx', 'src/cli.ts', '--entry', 'test/fixtures/node-app.ts', '--target', 'node', '--out-dir', 'tmp/node-build', '--clean', '--no-dts'],
+      command: 'node',
+      args: ['dist/cli.js', '--entry', 'test/fixtures/node-app.ts', '--target', 'node', '--out-dir', 'tmp/node-build', '--clean', '--no-dts'],
       expect: ['Building...', 'Build success']
     },
     {
       name: 'CLI: Browser Target',
-      command: 'bun',
-      args: ['run', 'tsx', 'src/cli.ts', '--entry', 'test/fixtures/browser.ts', '--target', 'browser', '--global-name', 'MyLib', '--out-dir', 'tmp/browser-build', '--clean', '--no-dts'],
+      command: 'node',
+      args: ['dist/cli.js', '--entry', 'test/fixtures/browser.ts', '--target', 'browser', '--global-name', 'MyLib', '--out-dir', 'tmp/browser-build', '--clean', '--no-dts'],
       expect: ['Building...', 'Build success']
     },
     // Programmatic API Tests
