@@ -1,1 +1,0 @@
-{"version":3,"sources":["../test.ts"],"names":[],"mappings":";;AAAO,MAAM,IAAA,GAAO","file":"test.cjs","sourcesContent":["export const test = \"hello\"\n"]}

@@ -24,6 +24,12 @@ pids/
 # Testing
 coverage/
 .nyc_output/
+screenshots/
+replay-*.json
+testout/
+test-*.txt
+test-*.log
+validation-report.json
 
 # IDE files
 .vscode/
