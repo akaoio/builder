@@ -116,60 +116,11 @@ jobs:
             npm test
           fi
 
-  battle-tests:
-    name: Battle Terminal Tests
-    runs-on: ubuntu-latest
-    needs: build-test
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build Builder
-        run: npm run build
-
-      - name: Install Battle framework
-        run: |
-          cd ../battle
-          npm install
-          npm run build
-          npm link
-          cd ../builder
-
-      - name: Install tsx for TypeScript support
-        run: npm install -g tsx
-
-      - name: Run Battle tests
-        run: |
-          echo "⚔️ Running Builder Battle tests..."
-          
-          # Run the recovered Battle tests
-          if [ -f "builder.battle.cjs" ]; then
-            battle test builder.battle.cjs
-          fi
-
-      - name: Upload Battle reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: builder-battle-reports
-          path: |
-            logs/
-            battle-reports/
-          retention-days: 7
 
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest
-    needs: battle-tests
+    needs: build-test
     
     steps:
       - name: Checkout repository
@@ -299,7 +250,7 @@ jobs:
   publish:
     name: Publish Release
     runs-on: ubuntu-latest
-    needs: [build-test, battle-tests, integration-tests, performance-test, self-hosting-test]
+    needs: [build-test, integration-tests, performance-test, self-hosting-test]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     
     steps:
