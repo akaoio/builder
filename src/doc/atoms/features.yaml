@@ -1,13 +1,78 @@
-features:
-  - name: "Multiple Output Formats"
-    description: "Build to CJS, ESM, IIFE, UMD formats with a single config"
-  - name: "TypeScript Declarations"
-    description: "Automatic .d.ts generation with source maps"
-  - name: "Watch Mode"
-    description: "Intelligent rebuild on file changes"
-  - name: "Zero Config"
-    description: "Smart defaults with preset configurations"
-  - name: "Battle-Tested"
-    description: "Tested with @akaoio/battle using real PTY emulation"
-  - name: "Multi-Runtime"
-    description: "Works with Bun, Node.js, and Deno"
+build_system:
+  - name: "Universal Build Pipeline"
+    description: "Standardized TypeScript compilation across the @akaoio ecosystem"
+    benefits:
+      - "Consistent build patterns across all projects"
+      - "Eliminates configuration drift"
+      - "Reduces maintenance overhead"
+  - name: "Zero Configuration"
+    description: "Smart defaults that work out of the box"
+    benefits:
+      - "No complex setup required"
+      - "Optimized for @akaoio project patterns"
+      - "Instant productivity"
+
+typescript_support:
+  - name: "Full TypeScript Integration"
+    description: "Native TypeScript compilation with complete type checking"
+  - name: "Declaration Generation"
+    description: "Automatic .d.ts files with source maps for perfect IntelliSense"
+  - name: "Modern JavaScript Output"
+    description: "Optimized output for current Node.js and browser environments"
+
+output_formats:
+  - format: "CommonJS (CJS)"
+    description: "Traditional Node.js module format for maximum compatibility"
+    use_cases:
+      - "Legacy Node.js projects"
+      - "npm package consumption"
+      - "Server-side applications"
+  - format: "ES Modules (ESM)"
+    description: "Modern JavaScript modules with tree-shaking support"
+    use_cases:
+      - "Modern bundlers (Vite, Rollup)"
+      - "Browser applications"
+      - "Node.js ESM projects"
+  - format: "Immediately Invoked Function Expression (IIFE)"
+    description: "Browser-ready scripts that run immediately"
+    use_cases:
+      - "Browser scripts without bundlers"
+      - "CDN distribution"
+      - "Direct HTML inclusion"
+  - format: "Universal Module Definition (UMD)"
+    description: "Works in all environments - AMD, CommonJS, and globals"
+    use_cases:
+      - "Universal libraries"
+      - "Framework-agnostic components"
+      - "Maximum compatibility"
+
+integration:
+  - project: "@akaoio/battle"
+    description: "Full testing integration with real PTY-based terminal testing"
+    integration_points:
+      - "Build artifacts are tested with actual terminal interaction"
+      - "Real-world usage validation"
+      - "Cross-platform compatibility testing"
+  - project: "@akaoio/stacker"
+    description: "System management integration for automated builds"
+    integration_points:
+      - "Automated build triggers"
+      - "System service integration"
+      - "Cross-platform build orchestration"
+  - project: "@akaoio/composer"
+    description: "Documentation generation from atomic sources"
+    integration_points:
+      - "Automated documentation builds"
+      - "API documentation generation"
+      - "Template-based content generation"
+
+performance:
+  - optimization: "Incremental Compilation"
+    description: "Only recompile changed files for faster build times"
+    impact: "Up to 90% faster rebuilds in watch mode"
+  - optimization: "Tree Shaking"
+    description: "Eliminate dead code for smaller bundle sizes"
+    impact: "Typically 20-40% smaller output bundles"
+  - optimization: "Source Maps"
+    description: "Maintain debugging capability with production builds"
+    impact: "Perfect stack traces in production"

@@ -1,36 +1,132 @@
-cli:
-  install: "npm install -g @akaoio/builder"
-  commands:
-    - command: "akao-build"
-      description: "Build with default configuration"
-    - command: "akao-build --watch"
-      description: "Watch mode with auto-rebuild"
-    - command: "akao-build --target library"
-      description: "Build as library with CJS + ESM"
-    - command: "akao-build --clean"
-      description: "Clean output directory before build"
+basic_command: "npx akao-build"
 
-api:
-  basic: |
-    import { Builder } from "@akaoio/builder"
+api_functions:
+  - name: "Builder.build()"
+    description: "Main build function that compiles TypeScript to multiple formats"
+    parameters:
+      - name: "config"
+        type: "BuildConfig"
+        description: "Build configuration object"
+    returns: "Promise<BuildResult>"
+    example: |
+      import { Builder } from "@akaoio/builder"
+      
+      const builder = new Builder({
+        entry: "./src/index.ts",
+        target: "library",
+        clean: true
+      })
+      
+      const result = await builder.build()
+  - name: "Builder.watch()"
+    description: "Start watch mode for continuous compilation"
+    parameters:
+      - name: "config"
+        type: "BuildConfig"
+        description: "Build configuration object"
+      - name: "onChange"
+        type: "Function"
+        description: "Callback for file changes"
+    returns: "Watcher"
+    example: |
+      const watcher = builder.watch({
+        entry: "./src/index.ts"
+      }, (event) => console.log('File changed:', event))
+
+configuration:
+  - option: "target"
+    type: "string"
+    default: "library"
+    purpose: "Define the build target type"
+    values:
+      - library: "Multi-format library build (CJS + ESM)"
+      - app: "Single-format application build"
+      - cli: "Command-line application with shebang"
+  - option: "formats"
+    type: "string[]"
+    default: '["cjs", "esm"]'
+    purpose: "Specify output formats to generate"
+    example: |
+      {
+        formats: ["cjs", "esm", "iife", "umd"]
+      }
+  - option: "dts"
+    type: "boolean"
+    default: "true"
+    purpose: "Generate TypeScript declaration files"
+  - option: "sourcemap"
+    type: "boolean"
+    default: "true"
+    purpose: "Generate source maps for debugging"
+  - option: "minify"
+    type: "boolean"
+    default: "false"
+    purpose: "Minify output for production builds"
+
+build_targets:
+  - target: "Library"
+    description: "Build reusable libraries with multiple output formats"
+    command: "akao-build --target library"
+    output: "dist/ with CJS, ESM, and declarations"
+    optimization: "Tree-shaking enabled, external dependencies excluded"
+    environment: "Node.js and browsers"
+    configuration: |
+      {
+        target: "library",
+        formats: ["cjs", "esm"],
+        dts: true,
+        external: ["node:*"]
+      }
+  - target: "Application"
+    description: "Build standalone applications"
+    command: "akao-build --target app"
+    output: "dist/index.js (single file)"
+    optimization: "Bundle all dependencies, minified"
+    environment: "Target runtime only"
+    configuration: |
+      {
+        target: "app",
+        formats: ["cjs"],
+        bundle: true,
+        minify: true
+      }
+  - target: "CLI Tool"
+    description: "Build command-line tools with executable permissions"
+    command: "akao-build --target cli"
+    output: "dist/cli.js with shebang"
+    optimization: "Bundled with Node.js built-ins external"
+    environment: "Node.js command-line"
+    configuration: |
+      {
+        target: "cli",
+        formats: ["cjs"],
+        shebang: "#!/usr/bin/env node",
+        external: ["node:*"]
+      }
+
+advanced_config: |
+  // builder.config.js - Advanced configuration
+  module.exports = {
+    entry: "src/index.ts",
+    target: "library",
+    formats: ["cjs", "esm", "iife"],
+    dts: true,
+    sourcemap: true,
+    clean: true,
+    external: ["node:*"],
+    minify: process.env.NODE_ENV === "production",
     
-    const builder = new Builder({
-      entry: "./src/index.ts",
-      target: "library",
-      clean: true
-    })
+    // Advanced options
+    tsconfig: "tsconfig.build.json",
+    outDir: "build",
+    plugins: [
+      // Custom build plugins
+    ],
     
-    await builder.build()
-  
-  config: |
-    // builder.config.js
-    module.exports = {
-      entry: "src/index.ts",
-      target: "library",
-      formats: ["cjs", "esm"],
-      dts: true,
-      sourcemap: true,
-      clean: true,
-      external: ["node:*"],
-      minify: process.env.NODE_ENV === "production"
+    // Format-specific options
+    format: {
+      iife: {
+        globalName: "MyLibrary"
+      }
     }
+  }

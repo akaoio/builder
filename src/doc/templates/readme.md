@@ -1,52 +1,93 @@
 # {{project.name}}
 
-> {{project.description}}
+{{project.tagline}}
+
+> {{project.foundation}}
 
 [![Version](https://img.shields.io/npm/v/{{project.name}}.svg)](https://www.npmjs.com/package/{{project.name}})
 [![License](https://img.shields.io/npm/l/{{project.name}}.svg)](https://github.com/akaoio/builder/blob/main/LICENSE)
 
-## Features
+## Build System Features
 
-{{#each features.features}}
-- **{{name}}**: {{description}}
+{{#each features.build_system}}
+### {{this.name}}
+
+{{this.description}}
+
+{{#if this.benefits}}
+**Benefits:**
+{{#each this.benefits}}
+- {{this}}
+{{/each}}
+{{/if}}
+{{/each}}
+
+## TypeScript Support
+
+{{#each features.typescript_support}}
+- **{{this.name}}**: {{this.description}}
+{{/each}}
+
+## Output Formats
+
+{{#each features.output_formats}}
+### {{this.format}}
+
+{{this.description}}
+
+**Use Cases:**
+{{#each this.use_cases}}
+- {{this}}
+{{/each}}
 {{/each}}
 
 ## Installation
 
 ```bash
-{{usage.cli.install}}
+npm install -g @akaoio/builder
 ```
 
 ## Quick Start
 
-### CLI Usage
+### Basic Usage
 
-{{#each usage.cli.commands}}
 ```bash
-{{command}}  # {{description}}
+{{usage.basic_command}}
+```
+
+### Build Targets
+
+{{#each usage.build_targets}}
+#### {{this.target}}
+
+{{this.description}}
+
+```bash
+{{this.command}}
+```
+
+**Output:** {{this.output}}
+**Environment:** {{this.environment}}
+
+{{/each}}
+
+### API Functions
+
+{{#each usage.api_functions}}
+#### {{this.name}}
+
+{{this.description}}
+
+```typescript
+{{this.example}}
 ```
 {{/each}}
 
-### Programmatic Usage
-
-```typescript
-{{usage.api.basic}}
-```
-
-### Configuration File
+### Advanced Configuration
 
 ```javascript
-{{usage.api.config}}
+{{usage.advanced_config}}
 ```
-
-## Build Targets
-
-- **library**: NPM packages (CJS + ESM + DTS)
-- **node**: Node.js applications (CJS)
-- **bun**: Bun applications (ESM)
-- **browser**: Browser bundles (IIFE/UMD)
-- **cli**: CLI tools (CJS with shebang)
-- **universal**: All formats
 
 ## Architecture
 

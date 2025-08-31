@@ -1,44 +1,57 @@
-/**
- * Composer configuration for @akaoio/builder
- * TypeScript build framework with multi-format output
- */
-
+// @akaoio/composer configuration for Builder cortex
 module.exports = {
   sources: {
-    // Project metadata
+    atoms: {
+      pattern: 'src/doc/atoms/**/*.yaml',
+      parser: 'yaml'
+    },
     project: {
-      pattern: 'src/doc/atoms/project.yaml',
+      pattern: 'src/doc/project.yaml',
       parser: 'yaml'
-    },
-    
-    // Features
-    features: {
-      pattern: 'src/doc/atoms/features.yaml',
-      parser: 'yaml'
-    },
-    
-    // Usage examples
-    usage: {
-      pattern: 'src/doc/atoms/usage.yaml',
-      parser: 'yaml'
-    },
-    
-    // Package metadata
-    package: {
-      pattern: 'package.json',
-      parser: 'json'
     }
   },
-  
   build: {
     tasks: []
   },
-  
   outputs: [
     {
       target: 'README.md',
       template: 'src/doc/templates/readme.md',
-      format: 'markdown'
+      data: {
+        project: 'project',
+        features: 'atoms.features',
+        usage: 'atoms.usage'
+      }
+    },
+    {
+      target: 'CLAUDE.md',
+      template: 'templates/claude.md',
+      data: {
+        project: 'project',
+        features: 'atoms.features',
+        usage: 'atoms.usage'
+      }
+    },
+    {
+      target: 'API.md',
+      template: 'templates/api.md',
+      data: {
+        project: 'project',
+        features: 'atoms.features',
+        usage: 'atoms.usage'
+      }
+    },
+    {
+      target: 'BUILD-ARCHITECTURE.md',
+      template: 'templates/build-architecture.md',
+      data: {
+        project: 'project',
+        features: 'atoms.features',
+        usage: 'atoms.usage'
+      }
     }
-  ]
+  ],
+  options: {
+    baseDir: process.cwd()
+  }
 }

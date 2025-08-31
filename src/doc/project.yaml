@@ -1,12 +1,41 @@
-title: "My Project"
-description: "A sample project using @akaoio/composer"
-name: "@my/project"
-usage: |
-  import { MyProject } from '@my/project'
+title: "Universal TypeScript Build Framework"
+description: "Standardized build system for the @akaoio ecosystem"
+name: "@akaoio/builder"
+version: "1.0.2"
+tagline: "Build TypeScript projects with zero configuration and maximum compatibility"
+foundation: "Universal TypeScript compilation system that standardizes build patterns across the entire @akaoio ecosystem. Eliminates configuration drift and provides consistent, reliable builds with multi-format output support."
+
+purpose: |
+  Builder provides a unified build system for all @akaoio TypeScript projects, ensuring:
+  - Consistent build patterns across the ecosystem
+  - Zero-configuration setup with intelligent defaults
+  - Multi-format output (CJS, ESM, IIFE, UMD) from single source
+  - Complete TypeScript integration with declaration generation
+  - Optimized builds with tree-shaking and source maps
+
+key_benefits:
+  - "Universal build patterns across all @akaoio projects"
+  - "Zero configuration required - works out of the box"
+  - "Multi-format TypeScript compilation (CJS, ESM, IIFE, UMD)"
+  - "Complete type declaration generation"
+  - "Integrated testing with @akaoio/battle"
+  - "System management integration with @akaoio/stacker"
+  - "Documentation generation with @akaoio/composer"
+
+ecosystem_integration: |
+  Builder is the central build system for the entire @akaoio ecosystem:
   
-  const project = new MyProject()
-  project.run()
-features:
-  - "Feature 1"
-  - "Feature 2" 
-  - "Feature 3"
+  - **@akaoio/battle**: Tests build artifacts with real PTY interaction
+  - **@akaoio/stacker**: Provides system management and automation
+  - **@akaoio/composer**: Generates documentation from atomic sources
+  - **@akaoio/air**: Distributed P2P database system
+  - **@akaoio/gun**: Security-hardened real-time database
+  - **@akaoio/dashboard**: Living Agent Network monitoring
+  - **@akaoio/ui**: Component framework and design system
+
+architectural_principles:
+  - "Source-first development - edit .ts files, never built .js artifacts"
+  - "Multi-format compilation ensures maximum compatibility"
+  - "Incremental builds for development efficiency"
+  - "Production-ready optimizations (tree-shaking, minification)"
+  - "Complete TypeScript toolchain integration"
