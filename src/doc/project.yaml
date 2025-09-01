@@ -1,7 +1,7 @@
 title: "Universal TypeScript Build Framework"
 description: "Standardized build system for the @akaoio ecosystem"
 name: "@akaoio/builder"
-version: "1.0.2"
+version: "0.0.1"
 tagline: "Build TypeScript projects with zero configuration and maximum compatibility"
 foundation: "Universal TypeScript compilation system that standardizes build patterns across the entire @akaoio ecosystem. Eliminates configuration drift and provides consistent, reliable builds with multi-format output support."
 

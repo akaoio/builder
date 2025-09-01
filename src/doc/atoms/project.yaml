@@ -1,6 +1,6 @@
 name: "@akaoio/builder"
 description: "Universal TypeScript build framework for the @akaoio ecosystem"
-version: "1.0.2"
+version: "0.0.1"
 author: "AKAO Team"
 repository: "https://github.com/akaoio/builder"
 license: "MIT"

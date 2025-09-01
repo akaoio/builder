@@ -222,7 +222,6 @@ async function runAllBuilderTests() {
   
   // Summary
   console.log('\n📋 Builder Battle Test Summary:')
-  console.log('=================================')
   
   const passed = results.filter(r => r.status === 'passed').length
   const failed = results.filter(r => r.status === 'failed').length

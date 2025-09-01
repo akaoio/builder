@@ -22,7 +22,7 @@ function setupFixtures() {
   return \`Hello, \${name}!\`
 }
 
-export const version = '1.0.0'
+export const version = '0.0.1'
 `
   )
 

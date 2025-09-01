@@ -1,6 +1,6 @@
 {
   "name": "@akaoio/builder",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "description": "Universal TypeScript build framework for the @akaoio ecosystem",
   "type": "module",
   "main": "dist/index.cjs",
@@ -69,8 +69,8 @@
     "typescript": "^5.9.2"
   },
   "devDependencies": {
-    "@akaoio/battle": "^1.2.2",
-    "@akaoio/composer": "*",
+    "@akaoio/battle": "^0.0.1",
+    "@akaoio/composer": "^0.0.1",
     "@types/node": "^22.10.6",
     "node-pty": "^1.0.0",
     "tsx": "^4.20.4"
